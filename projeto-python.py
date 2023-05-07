@@ -29,11 +29,11 @@ class Queue:
         return not bool(self.items)
 
 
-def validate_expression(expression):
+def validacao_expressao(expressao):
     stack = Stack()
     opening_brackets = '([{'
     closing_brackets = ')]}'
-    for char in expression:
+    for char in expressao:
         if char in opening_brackets:
             stack.push(char)
         elif char in closing_brackets:
@@ -45,9 +45,14 @@ def validate_expression(expression):
 
 
 def add_operation(queue):
-    operation = input("Qual operação você deseja adicionar à fila? (+, -, *, /): ")
-    valores = input("Digite os valores separados por vírgulas: ").split(',')
-    queue.enqueue((operation, valores))
+    print('---------- OPERAÇÕES ----------')
+    print('Adição (+)')
+    print('Subtração (-)')
+    print('Multiplicação (*)')
+    print('Divisão (/)')
+    operacao = input("Qual operação você deseja adicionar à fila?  ")
+    valores = input("Digite os VALORES separados por vírgulas: ").split(',')
+    queue.enqueue((operacao, valores))
     print("Operação adicionada com sucesso!")
 
 
@@ -55,14 +60,14 @@ def execute_next_operation(queue):
     if queue.is_empty():
         print("A fila de operações está vazia.")
     else:
-        operation, valores = queue.dequeue()
-        result = eval(operation.join(valores))
-        print(f"Operação: {operation}")
+        operacao, valores = queue.dequeue()
+        result = eval(operacao.join(valores))
+        print(f"Operação: {operacao}")
         print(f"Valores: {valores}")
         print(f"Resultado: {result}")
 
 
-def execute_all_operations(queue):
+def executar_operacoes(queue):
     if queue.is_empty():
         print("A fila de operações está vazia.")
     else:
@@ -73,40 +78,40 @@ def execute_all_operations(queue):
 def main():
     operation_queue = Queue()
     while True:
-        print("MENU PRINCIPAL")
+        print("---------- MENU PRINCIPAL ----------")
         print("1 - Operações")
         print("2 - Expressão")
         print("0 - Finalizar Programa")
-        opcao_primaria = input("Escolha uma opção: ")
-        if opcao_primaria == '1':
+        opcao_menu_principal = input("Escolha uma opção: ")
+        if opcao_menu_principal == '1':
             while True:
-                print("MENU DE OPERAÇÕES")
+                print("---------- MENU DE OPERAÇÕES ----------")
                 print("1 - Adicionar Operação na Fila")
                 print("2 - Executar Próxima Operação da Fila")
                 print("3 - Executar Todas as Operações da Fila")
                 print("0 - Voltar para o menu principal")
-                sub_choice = input("Escolha uma opção: ")
-                if sub_choice == '1':
+                opcao_menu_operacoes = input("Escolha uma opção: ")
+                if opcao_menu_operacoes == '1':
                     add_operation(operation_queue)
-                elif sub_choice == '2':
+                elif opcao_menu_operacoes == '2':
                     execute_next_operation(operation_queue)
-                elif sub_choice == '3':
-                    execute_all_operations(operation_queue)
-                elif sub_choice == '0':
+                elif opcao_menu_operacoes == '3':
+                    executar_operacoes(operation_queue)
+                elif opcao_menu_operacoes == '0':
                     break
                 else:
                     print("Opção inválida. Tente novamente.")
-        elif opcao_primaria == '2':
+        elif opcao_menu_principal == '2':
             expressao = input("Digite uma expressão matemática: ")
-            if validate_expression(expressao):
+            if validacao_expressao(expressao):
                 print("Expressão válida.")
             else:
                 print("Expressão inválida.")
-        elif opcao_primaria == '0':
+        elif opcao_menu_principal == '0':
             print("Finalizando o programa...")
             break
         else:
-            print("Opção inválida. Tente novamente.")
+            print("Opção inválida! Tente novamente.")
 
 
 if __name__ == '__main__':
